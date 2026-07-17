@@ -1,0 +1,385 @@
+{
+  "timestamp": "2026-07-17T10:29:08.324094+00:00",
+  "top_k": 8,
+  "total_questions": 25,
+  "page_recall_at_k": 0.32,
+  "answer_recall_at_k": 0.28,
+  "mrr": 0.32,
+  "details": [
+    {
+      "id": "q01",
+      "question": "How many days of annual leave do full-time employees get?",
+      "category": "HR",
+      "expected_page": "Leave and Absence Policy",
+      "expected_answer": "25 days of annual leave plus public holidays",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q02",
+      "question": "What is the advance notice required for annual leave of 3 or more consecutive days?",
+      "category": "HR",
+      "expected_page": "Leave and Absence Policy",
+      "expected_answer": "At least 2 weeks in advance via BambooHR",
+      "page_hit": true,
+      "answer_hit": true,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Leave and Absence Policy",
+        "section": "Annual Leave",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q03",
+      "question": "How many weeks of paid parental leave do primary carers receive?",
+      "category": "HR",
+      "expected_page": "Leave and Absence Policy",
+      "expected_answer": "16 weeks paid parental leave",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q04",
+      "question": "What is the minimum number of days per week employees must be in the office?",
+      "category": "HR",
+      "expected_page": "Remote Work Guidelines",
+      "expected_answer": "Minimum 2 days per week in the office (hybrid-first model)",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q05",
+      "question": "What are the core working hours for remote employees?",
+      "category": "HR",
+      "expected_page": "Remote Work Guidelines",
+      "expected_answer": "10:00\u201316:00 in your local timezone",
+      "page_hit": true,
+      "answer_hit": true,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Remote Work Guidelines",
+        "section": "Eligibility",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q06",
+      "question": "What must be completed during the first two weeks of onboarding?",
+      "category": "HR",
+      "expected_page": "Onboarding Checklist",
+      "expected_answer": "Full onboarding checklist including compliance training, IT setup, buddy meeting, and 30-60-90 day goals",
+      "page_hit": true,
+      "answer_hit": false,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Onboarding Checklist",
+        "section": "Onboarding Checklist",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q07",
+      "question": "What is the branch naming convention for bug fixes?",
+      "category": "Engineering",
+      "expected_page": "Git Workflow",
+      "expected_answer": "fix/JIRA-456-bug-description format",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q08",
+      "question": "What is the maximum lifetime of a pull request?",
+      "category": "Engineering",
+      "expected_page": "Git Workflow",
+      "expected_answer": "3 days maximum",
+      "page_hit": true,
+      "answer_hit": true,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Git Workflow",
+        "section": "Branch Naming",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q09",
+      "question": "What merge strategy is used for the main branch?",
+      "category": "Engineering",
+      "expected_page": "Git Workflow",
+      "expected_answer": "Squash merge to main",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q10",
+      "question": "What is the minimum unit test coverage for new code?",
+      "category": "Engineering",
+      "expected_page": "Testing Requirements",
+      "expected_answer": "Minimum 80% unit test coverage for new code",
+      "page_hit": true,
+      "answer_hit": true,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Testing Requirements",
+        "section": "Coverage Targets",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q11",
+      "question": "What test coverage is required for critical paths like auth and payments?",
+      "category": "Engineering",
+      "expected_page": "Testing Requirements",
+      "expected_answer": "95% coverage for critical paths",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q12",
+      "question": "What is the default API rate limit per minute?",
+      "category": "Engineering",
+      "expected_page": "API Design Standards",
+      "expected_answer": "100 requests per minute per API key, with burst of 200",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q13",
+      "question": "How often must API keys be rotated?",
+      "category": "Engineering",
+      "expected_page": "Security Standards",
+      "expected_answer": "Every 90 days",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q14",
+      "question": "What is the deadline for patching critical CVEs?",
+      "category": "Engineering",
+      "expected_page": "Security Standards",
+      "expected_answer": "Critical CVEs must be patched within 48 hours",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q15",
+      "question": "How should security incidents be reported?",
+      "category": "Engineering",
+      "expected_page": "Security Standards",
+      "expected_answer": "Report to security@q.agency within 1 hour",
+      "page_hit": true,
+      "answer_hit": true,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Security Standards",
+        "section": "Incident Response",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q16",
+      "question": "How long do sprints typically last at Q?",
+      "category": "Delivery",
+      "expected_page": "Sprint Ceremonies",
+      "expected_answer": "2-week sprints",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q17",
+      "question": "What is the response time SLA for P1 production incidents?",
+      "category": "Delivery",
+      "expected_page": "Incident Management",
+      "expected_answer": "15 minutes response time for P1 incidents",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q18",
+      "question": "When are weekly client status reports due?",
+      "category": "Delivery",
+      "expected_page": "Client Communication Standards",
+      "expected_answer": "Every Friday by 16:00",
+      "page_hit": true,
+      "answer_hit": true,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Client Communication Standards",
+        "section": "Status Reports",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q19",
+      "question": "What is the client kickoff timeline after contract signature?",
+      "category": "Delivery",
+      "expected_page": "Project Kickoff Process",
+      "expected_answer": "Within 5 business days of contract signature",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q20",
+      "question": "What is the expense auto-approval threshold?",
+      "category": "Finance",
+      "expected_page": "Expense Policy",
+      "expected_answer": "Under \u20ac100 is auto-approved with receipt",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q21",
+      "question": "What tool is used for time tracking?",
+      "category": "Finance",
+      "expected_page": "Timesheet Guidelines",
+      "expected_answer": "Harvest",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q22",
+      "question": "What is the disaster recovery RTO for cloud infrastructure?",
+      "category": "Infrastructure",
+      "expected_page": "Cloud Infrastructure Standards",
+      "expected_answer": "RTO of 4 hours and RPO of 1 hour",
+      "page_hit": true,
+      "answer_hit": true,
+      "reciprocal_rank": 1.0,
+      "top_result": {
+        "page_title": "Cloud Infrastructure Standards",
+        "section": "Backups",
+        "similarity": 0.0
+      }
+    },
+    {
+      "id": "q23",
+      "question": "What cloud provider does Q standardise on?",
+      "category": "Infrastructure",
+      "expected_page": "Cloud Infrastructure Standards",
+      "expected_answer": "AWS",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q24",
+      "question": "What is the GDPR breach notification deadline to authorities?",
+      "category": "Compliance",
+      "expected_page": "Data Privacy and GDPR",
+      "expected_answer": "Within 72 hours",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    },
+    {
+      "id": "q25",
+      "question": "How quickly must code reviewers respond to review requests?",
+      "category": "Engineering",
+      "expected_page": "Code Review Standards",
+      "expected_answer": "Within 4 business hours",
+      "page_hit": false,
+      "answer_hit": false,
+      "reciprocal_rank": 0.0,
+      "top_result": {
+        "page_title": null,
+        "section": null,
+        "similarity": 0
+      }
+    }
+  ]
+}

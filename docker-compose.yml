@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: q-kb-postgres
+    environment:
+      POSTGRES_USER: qkb
+      POSTGRES_PASSWORD: qkb_dev_password
+      POSTGRES_DB: q_knowledge_base
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qkb -d q_knowledge_base"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

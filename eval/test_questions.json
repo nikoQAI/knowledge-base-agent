@@ -1,0 +1,177 @@
+[
+  {
+    "id": "q01",
+    "question": "How many days of annual leave do full-time employees get?",
+    "expected_answer": "25 days of annual leave plus public holidays",
+    "expected_page": "Leave and Absence Policy",
+    "category": "HR"
+  },
+  {
+    "id": "q02",
+    "question": "What is the advance notice required for annual leave of 3 or more consecutive days?",
+    "expected_answer": "At least 2 weeks in advance via BambooHR",
+    "expected_page": "Leave and Absence Policy",
+    "category": "HR"
+  },
+  {
+    "id": "q03",
+    "question": "How many weeks of paid parental leave do primary carers receive?",
+    "expected_answer": "16 weeks paid parental leave",
+    "expected_page": "Leave and Absence Policy",
+    "category": "HR"
+  },
+  {
+    "id": "q04",
+    "question": "What is the minimum number of days per week employees must be in the office?",
+    "expected_answer": "Minimum 2 days per week in the office (hybrid-first model)",
+    "expected_page": "Remote Work Guidelines",
+    "category": "HR"
+  },
+  {
+    "id": "q05",
+    "question": "What are the core working hours for remote employees?",
+    "expected_answer": "10:00–16:00 in your local timezone",
+    "expected_page": "Remote Work Guidelines",
+    "category": "HR"
+  },
+  {
+    "id": "q06",
+    "question": "What must be completed during the first two weeks of onboarding?",
+    "expected_answer": "Full onboarding checklist including compliance training, IT setup, buddy meeting, and 30-60-90 day goals",
+    "expected_page": "Onboarding Checklist",
+    "category": "HR"
+  },
+  {
+    "id": "q07",
+    "question": "What is the branch naming convention for bug fixes?",
+    "expected_answer": "fix/JIRA-456-bug-description format",
+    "expected_page": "Git Workflow",
+    "category": "Engineering"
+  },
+  {
+    "id": "q08",
+    "question": "What is the maximum lifetime of a pull request?",
+    "expected_answer": "3 days maximum",
+    "expected_page": "Git Workflow",
+    "category": "Engineering"
+  },
+  {
+    "id": "q09",
+    "question": "What merge strategy is used for the main branch?",
+    "expected_answer": "Squash merge to main",
+    "expected_page": "Git Workflow",
+    "category": "Engineering"
+  },
+  {
+    "id": "q10",
+    "question": "What is the minimum unit test coverage for new code?",
+    "expected_answer": "Minimum 80% unit test coverage for new code",
+    "expected_page": "Testing Requirements",
+    "category": "Engineering"
+  },
+  {
+    "id": "q11",
+    "question": "What test coverage is required for critical paths like auth and payments?",
+    "expected_answer": "95% coverage for critical paths",
+    "expected_page": "Testing Requirements",
+    "category": "Engineering"
+  },
+  {
+    "id": "q12",
+    "question": "What is the default API rate limit per minute?",
+    "expected_answer": "100 requests per minute per API key, with burst of 200",
+    "expected_page": "API Design Standards",
+    "category": "Engineering"
+  },
+  {
+    "id": "q13",
+    "question": "How often must API keys be rotated?",
+    "expected_answer": "Every 90 days",
+    "expected_page": "Security Standards",
+    "category": "Engineering"
+  },
+  {
+    "id": "q14",
+    "question": "What is the deadline for patching critical CVEs?",
+    "expected_answer": "Critical CVEs must be patched within 48 hours",
+    "expected_page": "Security Standards",
+    "category": "Engineering"
+  },
+  {
+    "id": "q15",
+    "question": "How should security incidents be reported?",
+    "expected_answer": "Report to security@q.agency within 1 hour",
+    "expected_page": "Security Standards",
+    "category": "Engineering"
+  },
+  {
+    "id": "q16",
+    "question": "How long do sprints typically last at Q?",
+    "expected_answer": "2-week sprints",
+    "expected_page": "Sprint Ceremonies",
+    "category": "Delivery"
+  },
+  {
+    "id": "q17",
+    "question": "What is the response time SLA for P1 production incidents?",
+    "expected_answer": "15 minutes response time for P1 incidents",
+    "expected_page": "Incident Management",
+    "category": "Delivery"
+  },
+  {
+    "id": "q18",
+    "question": "When are weekly client status reports due?",
+    "expected_answer": "Every Friday by 16:00",
+    "expected_page": "Client Communication Standards",
+    "category": "Delivery"
+  },
+  {
+    "id": "q19",
+    "question": "What is the client kickoff timeline after contract signature?",
+    "expected_answer": "Within 5 business days of contract signature",
+    "expected_page": "Project Kickoff Process",
+    "category": "Delivery"
+  },
+  {
+    "id": "q20",
+    "question": "What is the expense auto-approval threshold?",
+    "expected_answer": "Under €100 is auto-approved with receipt",
+    "expected_page": "Expense Policy",
+    "category": "Finance"
+  },
+  {
+    "id": "q21",
+    "question": "What tool is used for time tracking?",
+    "expected_answer": "Harvest",
+    "expected_page": "Timesheet Guidelines",
+    "category": "Finance"
+  },
+  {
+    "id": "q22",
+    "question": "What is the disaster recovery RTO for cloud infrastructure?",
+    "expected_answer": "RTO of 4 hours and RPO of 1 hour",
+    "expected_page": "Cloud Infrastructure Standards",
+    "category": "Infrastructure"
+  },
+  {
+    "id": "q23",
+    "question": "What cloud provider does Q standardise on?",
+    "expected_answer": "AWS",
+    "expected_page": "Cloud Infrastructure Standards",
+    "category": "Infrastructure"
+  },
+  {
+    "id": "q24",
+    "question": "What is the GDPR breach notification deadline to authorities?",
+    "expected_answer": "Within 72 hours",
+    "expected_page": "Data Privacy and GDPR",
+    "category": "Compliance"
+  },
+  {
+    "id": "q25",
+    "question": "How quickly must code reviewers respond to review requests?",
+    "expected_answer": "Within 4 business hours",
+    "expected_page": "Code Review Standards",
+    "category": "Engineering"
+  }
+]
