@@ -206,6 +206,105 @@ class VectorStore:
                     )
         return len(chunks)
 
+    def upsert_chunks_without_embeddings(self, chunks: list[Chunk]) -> int:
+        """Insert or update chunk content without touching embeddings."""
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                for chunk in chunks:
+                    cur.execute(
+                        """
+                        INSERT INTO kb_documents (
+                            page_id, page_title, breadcrumb, url, chunk_id,
+                            section_heading, heading_level, chunk_index,
+                            content, token_count, metadata, search_vector
+                        ) VALUES (
+                            %(page_id)s, %(page_title)s, %(breadcrumb)s, %(url)s, %(chunk_id)s,
+                            %(section_heading)s, %(heading_level)s, %(chunk_index)s,
+                            %(content)s, %(token_count)s, %(metadata)s,
+                            to_tsvector('english', %(search_text)s)
+                        )
+                        ON CONFLICT (chunk_id) DO UPDATE SET
+                            page_id = EXCLUDED.page_id,
+                            page_title = EXCLUDED.page_title,
+                            breadcrumb = EXCLUDED.breadcrumb,
+                            url = EXCLUDED.url,
+                            section_heading = EXCLUDED.section_heading,
+                            heading_level = EXCLUDED.heading_level,
+                            chunk_index = EXCLUDED.chunk_index,
+                            content = EXCLUDED.content,
+                            token_count = EXCLUDED.token_count,
+                            metadata = EXCLUDED.metadata,
+                            search_vector = EXCLUDED.search_vector
+                        """,
+                        {
+                            "page_id": chunk.page_id,
+                            "page_title": chunk.page_title,
+                            "breadcrumb": chunk.breadcrumb,
+                            "url": chunk.url,
+                            "chunk_id": chunk.chunk_id,
+                            "section_heading": chunk.section_heading,
+                            "heading_level": chunk.heading_level,
+                            "chunk_index": chunk.chunk_index,
+                            "content": chunk.content,
+                            "token_count": chunk.token_count,
+                            "metadata": json.dumps(chunk.metadata),
+                            "search_text": self._search_text(chunk),
+                        },
+                    )
+        return len(chunks)
+
+    def update_embeddings(
+        self, chunk_ids: list[str], embeddings: list[list[float]]
+    ) -> int:
+        """Batch-update embeddings for existing chunks."""
+        if len(chunk_ids) != len(embeddings):
+            raise ValueError("chunk_ids and embeddings must have the same length")
+
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.executemany(
+                    "UPDATE kb_documents SET embedding = %s WHERE chunk_id = %s",
+                    [(embedding, chunk_id) for chunk_id, embedding in zip(chunk_ids, embeddings)],
+                )
+        return len(chunk_ids)
+
+    def load_all_chunks(self) -> list[Chunk]:
+        """Load all stored chunks for re-embedding."""
+        with self._connect() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT page_id, page_title, breadcrumb, url, chunk_id,
+                           section_heading, heading_level, chunk_index,
+                           content, token_count, metadata
+                    FROM kb_documents
+                    ORDER BY page_id, chunk_index
+                    """
+                )
+                rows = cur.fetchall()
+
+        chunks: list[Chunk] = []
+        for row in rows:
+            metadata = row["metadata"]
+            if isinstance(metadata, str):
+                metadata = json.loads(metadata)
+            chunks.append(
+                Chunk(
+                    chunk_id=row["chunk_id"],
+                    page_id=row["page_id"],
+                    page_title=row["page_title"],
+                    breadcrumb=row["breadcrumb"],
+                    section_heading=row["section_heading"] or "Introduction",
+                    heading_level=row["heading_level"] or 1,
+                    content=row["content"],
+                    token_count=row["token_count"],
+                    chunk_index=row["chunk_index"],
+                    url=row["url"] or "",
+                    metadata=metadata or {},
+                )
+            )
+        return chunks
+
     def _vector_search(
         self,
         cur: psycopg.Cursor,

@@ -209,6 +209,54 @@ class BookStackClient:
         return pages
 
 
+def page_to_dict(page: KBPage) -> dict[str, Any]:
+    return {
+        "page_id": page.page_id,
+        "title": page.title,
+        "html": page.html,
+        "markdown": page.markdown,
+        "book_id": page.book_id,
+        "book_name": page.book_name,
+        "chapter_id": page.chapter_id,
+        "chapter_name": page.chapter_name,
+        "shelf_names": page.shelf_names,
+        "url": page.url,
+        "updated_at": page.updated_at,
+    }
+
+
+def page_from_dict(item: dict[str, Any]) -> KBPage:
+    return KBPage(
+        page_id=item["page_id"],
+        title=item["title"],
+        html=item.get("html", ""),
+        markdown=item.get("markdown", ""),
+        book_id=item.get("book_id", 0),
+        book_name=item.get("book_name", "Unknown"),
+        chapter_id=item.get("chapter_id"),
+        chapter_name=item.get("chapter_name"),
+        shelf_names=item.get("shelf_names", []),
+        url=item.get("url", ""),
+        updated_at=item.get("updated_at", ""),
+    )
+
+
+def save_pages_cache(pages: list[KBPage], path: Path) -> None:
+    """Persist fetched BookStack pages for fast re-ingest without API calls."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump([page_to_dict(page) for page in pages], f)
+
+
+def load_pages_cache(path: Path) -> list[KBPage]:
+    """Load pages previously saved by save_pages_cache."""
+    if not path.exists():
+        raise FileNotFoundError(f"No page cache found at {path}")
+    with path.open(encoding="utf-8") as f:
+        raw_pages = json.load(f)
+    return [page_from_dict(item) for item in raw_pages]
+
+
 def load_local_export(export_dir: Path) -> list[KBPage]:
     """Load pages from a local JSON export (BookStack format or our sample format)."""
     pages: list[KBPage] = []
@@ -221,18 +269,6 @@ def load_local_export(export_dir: Path) -> list[KBPage]:
 
     for item in raw_pages:
         pages.append(
-            KBPage(
-                page_id=item["page_id"],
-                title=item["title"],
-                html=item.get("html", ""),
-                markdown=item.get("markdown", ""),
-                book_id=item.get("book_id", 0),
-                book_name=item.get("book_name", "Unknown"),
-                chapter_id=item.get("chapter_id"),
-                chapter_name=item.get("chapter_name"),
-                shelf_names=item.get("shelf_names", []),
-                url=item.get("url", ""),
-                updated_at=item.get("updated_at", ""),
-            )
+            page_from_dict(item)
         )
     return pages

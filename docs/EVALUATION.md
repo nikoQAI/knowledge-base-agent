@@ -28,7 +28,7 @@ Each entry includes:
 | **Answer Recall@K** | Fraction where ≥60% of expected answer keywords appear in any retrieved chunk |
 | **MRR** | Mean Reciprocal Rank of the first correctly-ranked source page |
 
-## Baseline Results (Sample KB, local embeddings, top_k=5)
+## Baseline Results (Sample KB, top_k=5)
 
 Run date: 2026-07-17
 
@@ -66,4 +66,4 @@ When ingesting from the live BookStack API:
 3. Re-run evaluation: `python evaluate.py`
 4. Compare Page Recall@5 and MRR against these baselines
 
-Production embeddings (`text-embedding-3-small`) typically improve Answer Recall@5 by 2–5% over local dev embeddings.
+Re-run evaluation after switching embedding models or re-ingesting from the live KB to track retrieval quality over time.

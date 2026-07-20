@@ -11,20 +11,27 @@ from rich.console import Console
 from rich.table import Table
 
 from config import BOOKSTACK_REQUEST_DELAY
-from bookstack_client import BookStackClient, load_local_export
+from bookstack_client import (
+    BookStackClient,
+    load_local_export,
+    load_pages_cache,
+    save_pages_cache,
+)
 from chunker import StructuredChunker
 from embedder import Embedder
 from store import VectorStore
 
 console = Console()
 
+PAGES_CACHE = Path(__file__).resolve().parent.parent / "data" / "cache" / "bookstack_pages.json"
+
 
 @click.command()
 @click.option(
     "--source",
-    type=click.Choice(["api", "local"], case_sensitive=False),
+    type=click.Choice(["api", "local", "cache"], case_sensitive=False),
     default="local",
-    help="Ingest from BookStack API or local JSON export.",
+    help="Ingest from BookStack API, local JSON export, or saved page cache.",
 )
 @click.option(
     "--export-dir",
@@ -43,7 +50,16 @@ def main(source: str, export_dir: Path | None, clear: bool) -> None:
         console.print("[yellow]Clearing existing chunks...[/yellow]")
         store.clear()
 
-    if source == "api":
+    if source == "cache":
+        if not PAGES_CACHE.exists():
+            console.print(
+                f"[red]No page cache at {PAGES_CACHE}[/red]\n"
+                "Run [bold]python ingest.py --source api[/bold] once to create it."
+            )
+            sys.exit(1)
+        console.print(f"[cyan]Loading cached pages from {PAGES_CACHE}...[/cyan]")
+        pages = load_pages_cache(PAGES_CACHE)
+    elif source == "api":
         client = BookStackClient()
         if not client.is_configured():
             console.print(
@@ -74,6 +90,9 @@ def main(source: str, export_dir: Path | None, clear: bool) -> None:
         except Exception as exc:
             console.print(f"[red]API error:[/red] {exc}")
             sys.exit(1)
+
+        save_pages_cache(pages, PAGES_CACHE)
+        console.print(f"[dim]Saved page cache to {PAGES_CACHE}[/dim]")
     else:
         export_dir = export_dir or Path(__file__).resolve().parent.parent / "data" / "sample_kb"
         console.print(f"[cyan]Loading local export from {export_dir}...[/cyan]")
@@ -89,25 +108,34 @@ def main(source: str, export_dir: Path | None, clear: bool) -> None:
         console.print("[yellow]No chunks to ingest.[/yellow]")
         return
 
-    console.print("[cyan]Generating embeddings...[/cyan]")
     embedder = Embedder()
-    embeddings = embedder.embed_chunks(chunks)
+    console.print(
+        f"[dim]Model: {embedder.model} | Device: {embedder.device} | "
+        f"Batch size: {embedder.batch_size}[/dim]"
+    )
+
+    console.print("[cyan]Storing chunk content...[/cyan]")
+    store.upsert_chunks_without_embeddings(chunks)
+
+    console.print("[cyan]Generating embeddings...[/cyan]")
+    embeddings = embedder.embed_chunks(chunks, show_progress=True)
     console.print(
         f"[dim]Embedding tokens: {embedder.total_tokens:,} "
         f"(est. ${embedder.estimated_cost:.4f})[/dim]"
     )
 
-    console.print("[cyan]Storing in pgvector...[/cyan]")
-    count = store.upsert_chunks(chunks, embeddings)
+    console.print("[cyan]Updating embeddings in pgvector...[/cyan]")
+    store.update_embeddings([c.chunk_id for c in chunks], embeddings)
     stats = store.stats()
 
     table = Table(title="Ingestion Complete")
     table.add_column("Metric", style="cyan")
     table.add_column("Value", style="green")
     table.add_row("Pages ingested", str(len(pages)))
-    table.add_row("Chunks stored", str(count))
+    table.add_row("Chunks stored", str(len(chunks)))
     table.add_row("Total chunks in DB", str(stats["total_chunks"]))
     table.add_row("Total pages in DB", str(stats["total_pages"]))
+    table.add_row("Device", embedder.device)
     console.print(table)
 
 

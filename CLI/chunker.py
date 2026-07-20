@@ -141,7 +141,7 @@ class StructuredChunker:
                 sections.append((current_heading, current_level, body))
 
         if not sections:
-            sections.append((page_title_fallback, 1, markdown.strip()))
+            sections.append(("Introduction", 1, markdown.strip()))
         return sections
 
     def _split_html_sections(self, html: str) -> list[tuple[str, int, str]]:

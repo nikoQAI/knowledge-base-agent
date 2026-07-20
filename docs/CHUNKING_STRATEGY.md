@@ -49,7 +49,7 @@ Candidate chunks are normalised to fit embedding model sweet spots:
 
 | Parameter | Value | Rationale |
 |-----------|-------|-----------|
-| Target size | 512 tokens | Optimal for `text-embedding-3-small`; large enough for a complete policy paragraph, small enough for precise retrieval |
+| Target size | 512 tokens | Optimal for OpenAI embedding models; large enough for a complete policy paragraph, small enough for precise retrieval |
 | Maximum size | 768 tokens | Hard ceiling before forced sub-splitting |
 | Minimum size | 80 tokens | Chunks below this are merged with the next same-level section |
 | Overlap | 64 tokens | Trailing paragraphs carried into the next chunk to preserve cross-boundary context |

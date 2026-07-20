@@ -8,7 +8,7 @@ An internal RAG (Retrieval-Augmented Generation) agent that ingests Q's BookStac
 BookStack API / Local Export
         │
         ▼
-  Structured Chunker  ──►  OpenAI Embeddings  ──►  pgvector (PostgreSQL)
+  Structured Chunker  ──►  BGE Embeddings (local)  ──►  pgvector (PostgreSQL)
                                                         │
   User Question ──► Embed Query ──► Similarity Search ──┘
                                         │
@@ -20,9 +20,10 @@ BookStack API / Local Export
 
 - **Python 3.10+**
 - **PostgreSQL 16+** with **pgvector** extension
-- **OpenAI API key** (for `text-embedding-3-small` embeddings)
-- **Anthropic API key** (for Claude answer generation)
+- **Anthropic API key** (for Claude answer generation via proxy)
 - **BookStack API token** (optional — for live ingestion from kb.q.agency)
+
+Embeddings run locally via **Sentence Transformers + MPS** (Apple GPU) — no OpenAI key required.
 
 ## Quick Start
 
@@ -75,6 +76,20 @@ python ingest.py --source local --clear
 
 ```bash
 python ingest.py --source api --clear
+```
+
+Pages are cached to `data/cache/bookstack_pages.json` for fast re-runs.
+
+**Re-embed only (skip BookStack API, uses MPS):**
+
+```bash
+python reembed.py --from-cache --clear
+```
+
+Or re-embed existing DB chunks without re-chunking:
+
+```bash
+python reembed.py
 ```
 
 ### 5. Chat
@@ -147,7 +162,7 @@ python ingest.py --source local --clear
 │   ├── config.py           # Configuration
 │   ├── bookstack_client.py # BookStack API client
 │   ├── chunker.py          # Structured chunking
-│   ├── embedder.py         # OpenAI embeddings
+│   ├── embedder.py         # BGE embeddings (fastembed)
 │   ├── store.py            # pgvector storage
 │   ├── chat.py             # RAG chat logic
 │   ├── ingest.py           # Ingestion pipeline
@@ -168,7 +183,7 @@ python ingest.py --source local --clear
 | Component    | Choice                                   | Documentation                                          |
 | ------------ | ---------------------------------------- | ------------------------------------------------------ |
 | Chunking     | Hierarchical, heading-aware with overlap | [docs/CHUNKING_STRATEGY.md](docs/CHUNKING_STRATEGY.md) |
-| Embeddings   | OpenAI `text-embedding-3-small` (1536d)  | [docs/EMBEDDING_MODEL.md](docs/EMBEDDING_MODEL.md)     |
+| Embeddings   | BAAI `bge-large-en-v1.5` (1024d, MPS)    | [docs/EMBEDDING_MODEL.md](docs/EMBEDDING_MODEL.md)     |
 | Vector store | pgvector with HNSW cosine index          | —                                                      |
 | Chat model   | Claude Sonnet                            | —                                                      |
 | Retrieval    | Top-5 cosine similarity, threshold 0.3   | —                                                      |
@@ -191,16 +206,18 @@ Results are saved to `eval/results/`.
 
 | Variable                 | Required   | Description                               |
 | ------------------------ | ---------- | ----------------------------------------- |
-| `OPENAI_API_KEY`         | Yes        | Embedding generation                      |
 | `ANTHROPIC_API_KEY`      | Yes (chat) | Answer generation                         |
+| `ANTHROPIC_BASE_URL`     | No         | Proxy gateway for Anthropic               |
 | `DATABASE_URL`           | Yes        | PostgreSQL connection string              |
 | `BOOKSTACK_TOKEN_ID`     | API ingest | BookStack API token ID                    |
 | `BOOKSTACK_TOKEN_SECRET` | API ingest | BookStack API token secret                |
 | `BOOKSTACK_BASE_URL`     | No         | Default: `https://kb.q.agency`            |
-| `EMBEDDING_MODEL`        | No         | Default: `text-embedding-3-small`         |
+| `EMBEDDING_MODEL`        | No         | Default: `BAAI/bge-large-en-v1.5`         |
+| `EMBEDDING_BATCH_SIZE`   | No         | Default: `64` (MPS batch size)            |
+| `EMBEDDING_DEVICE`       | No         | Auto: `mps` on Mac, else `cpu`            |
 | `CHAT_MODEL`             | No         | Default: `claude-sonnet-5`                |
-| `TOP_K`                  | No         | Default: `5`                              |
-| `EMBEDDING_PROVIDER`     | No         | Set to `local` for dev without OpenAI key |
+| `TOP_K`                  | No         | Default: `8`                              |
+| `SIMILARITY_THRESHOLD`   | No         | Default: `0.15` (tuned for BGE)           |
 
 ## Evaluation Results
 
